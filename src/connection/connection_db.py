@@ -20,7 +20,7 @@ class Connection:
         self.connect_db()
 
         self.cursor.execute("""
-            CREATE TABLE "usuario" (
+            CREATE TABLE IF NOT EXISTS "usuario" (
                 "pk_id_usuario"	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                 "cpf_usua"	TEXT NOT NULL UNIQUE,
                 "nome_usua"	TEXT NOT NULL,
@@ -32,21 +32,22 @@ class Connection:
         """)
 
         self.cursor.execute("""
-            CREATE TABLE "categorias" (
+            CREATE TABLE IF NOT EXISTS "categorias" (
                 "pk_id_categoria"	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                 "nome_cate"	TEXT NOT NULL UNIQUE
             );
         """)
         # Criar chave estrangeira aqui
         self.cursor.execute("""
-            CREATE TABLE "produtos" (
+            CREATE TABLE IF NOT EXISTS "produtos" (
                 "pk_id_produto"	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                 "codigo_barra_prod"	TEXT NOT NULL,
                 "nome_prod"	TEXT NOT NULL UNIQUE,
                 "preco_prod"	REAL NOT NULL,
                 "quantidade_prod"	INTEGER NOT NULL,
                 "descricao_prod"	TEXT,
-                "fk_categoria"	INTEGER
+                "fk_categoria"	INTEGER NOT NULL,
+                FOREIGN KEY (fk_categoria) REFERENCES categorias(pk_id_categoria)
             );
         """)
 
