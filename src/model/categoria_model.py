@@ -36,15 +36,20 @@ class CategoriaModel:
 
     def insert_categoria(self):
         if self.not_vazio():
-            self.conn.connect_db()
+            try:
+                self.conn.connect_db()
 
-            self.conn.cursor.execute("""
-                INSERT INTO categorias (nome_cate)
-                VALUES (?)
-            """, self.dados)
-            print('inserido com sucesso')
+                self.conn.cursor.execute("""
+                    INSERT INTO categorias (nome_cate)
+                    VALUES (?)
+                """, self.dados)
+                print('inserido com sucesso')
 
-            self.conn.close_db()
+                self.conn.close_db()
+
+                return True
+            except:
+                return False
         else:
             print('esta vazio')
             return False
