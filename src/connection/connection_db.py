@@ -26,8 +26,8 @@ class Connection:
                 "cpf_usua"	TEXT NOT NULL UNIQUE,
                 "nome_usua"	TEXT NOT NULL,
                 "telefone_usua"	TEXT,
-                "endereco_usua"	TEXT,
                 "senha_usua"	TEXT NOT NULL,
+                "endereco_usua"	TEXT,
                 "observacao_usua"	TEXT
             );
         """)
