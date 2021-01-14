@@ -1,6 +1,9 @@
-import src.model.categoria_model as cm
+import src.model.usuario_model as useM
 
 
 if __name__ == "__main__":
-    cat_mod = cm.CategoriaModel()
-    cat_mod.insert_categoria("frios")
+   usem = useM.UsuarioModel(codigo=2)
+
+   # usem.insert_usuario()
+   # usem.update_usuario()
+   # usem.delete_usuario()

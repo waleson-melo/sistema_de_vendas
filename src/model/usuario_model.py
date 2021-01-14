@@ -137,3 +137,23 @@ class UsuarioModel:
         else:
             print('passe o codigo do usuario para alterar')
             return False
+
+    def delete_usuario(self):
+        if self.codigo != "":
+            try:
+                self.conn.connect_db()
+
+                self.conn.cursor.execute("""
+                    DELETE FROM usuarios WHERE pk_id_usuario=?
+                """, (self.codigo,))
+                print('usuario apagado com sucesso')
+
+                self.conn.close_db()
+
+                return True
+            except:
+                print('erro ao deletar usuario')
+                return False
+        else:
+            print('passe o codigo do usuario para deletar')
+            return False
