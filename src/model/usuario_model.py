@@ -73,3 +73,38 @@ class UsuarioModel:
     @observacao.setter
     def observacao(self, value):
         self._observacao = str(value).strip().upper()
+
+    # Functions
+
+    def not_empty(self):
+        cond = [
+            self.cpf != "",
+            self.nome != "",
+            self.senha != ""
+        ]
+        if all(cond):
+            return True
+        else:
+            return False
+
+    def insert_usuario(self):
+        if self.not_empty():
+            try:
+                self.conn.connect_db()
+
+                self.conn.cursor.execute("""
+                    INSERT INTO usuarios (cpf_usua, nome_usua, telefone_usua,
+                        senha_usua, endereco_usua, observacao_usua) 
+                    VALUES (?, ?, ?, ?, ?, ?)
+                """, self.dados)
+
+                self.conn.close_db()
+                print('usuario inserido com sucesso')
+
+                return True
+            except:
+                print('erro ao inserir usuario')
+                return False
+        else:
+            print('campos obrigatorios precisam ser preenchidos')
+            return False
