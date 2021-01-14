@@ -110,3 +110,18 @@ class CategoriaModel:
         else:
             print('passar o nome da categoria')
             return None
+
+    def select_all_categorias(self):
+        try:
+            self.conn.connect_db()
+
+            dados = self.conn.cursor.execute("""
+                SELECT pk_id_categoria, nome_cate FROM categorias
+            """).fetchall()
+
+            self.conn.close_db()
+
+            return dados
+        except:
+            print('erro ao pesquisar categorias')
+            return None
