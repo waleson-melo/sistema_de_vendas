@@ -91,3 +91,22 @@ class CategoriaModel:
         else:
             print('passe o codigo da categoria para apagar')
             return False
+
+    def select_categoria(self):
+        if self.not_vazio():
+            try:
+                self.conn.connect_db()
+
+                dados = self.conn.cursor.execute("""
+                    SELECT * FROM categorias WHERE nome_cate=?
+                """, self.dados).fetchone()
+
+                self.conn.close_db()
+
+                return dados
+            except:
+                print('erro ao pesquisar categoria')
+                return None
+        else:
+            print('passar o nome da categoria')
+            return None
