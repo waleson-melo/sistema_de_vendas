@@ -108,3 +108,32 @@ class UsuarioModel:
         else:
             print('campos obrigatorios precisam ser preenchidos')
             return False
+
+    def update_usuario(self):
+        if self.codigo != "":
+            if self.not_empty():
+                try:
+                    self.conn.connect_db()
+
+                    self.conn.cursor.execute("""
+                        UPDATE usuarios
+                        SET cpf_usua=?, nome_usua=?, telefone_usua=?,
+                            senha_usua=?, endereco_usua=?, observacao_usua=?
+                        WHERE pk_id_usuario=?
+                    """, (self.cpf, self.nome, self.telefone, self.senha,
+                        self.endereco, self.observacao, self.codigo))
+
+                    self.conn.close_db()
+
+                    print('usuario alterado com sucesso')
+
+                    return True
+                except:
+                    print('erro ao alterar usuario: ')
+                    return False
+            else:
+                print('preencha os campos obrigatorios')
+                return False
+        else:
+            print('passe o codigo do usuario para alterar')
+            return False
