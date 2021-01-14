@@ -71,3 +71,23 @@ class CategoriaModel:
         else:
             print('passe o codigo da categoria para alterar')
             return False
+
+    def delete_categoria(self):
+        if self.codigo != "":
+            try:
+                self.conn.connect_db()
+
+                self.conn.cursor.execute("""
+                    DELETE FROM categorias WHERE pk_id_categoria=?
+                """, self.codigo)
+
+                self.conn.close_db()
+                print('categoria apagada com sucesso')
+
+                return True
+            except:
+                print('erro ao apagar a categoria')
+                return False
+        else:
+            print('passe o codigo da categoria para apagar')
+            return False
