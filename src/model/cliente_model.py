@@ -169,3 +169,20 @@ class ClienteModel:
         else:
             print('passe o cpf do cliente para pesquisar')
             return None
+
+    def select_all_cliente(self):
+        try:
+            self.conn.connect_db()
+
+            dados = self.conn.cursor.execute("""
+                SELECT pk_id_cliente, cpf_clie, nome_clie, telefone_clie,
+                endereco_clie, observacao_clie 
+                FROM clientes
+            """).fetchall()
+
+            self.conn.close_db()
+
+            return dados
+        except:
+            print('erro ao pesquisar clientes')
+            return None
