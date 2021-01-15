@@ -17,7 +17,9 @@ class ProdutoModel:
             self.codigo_barra,
             self.nome,
             self.preco,
-            self.quantidade
+            self.quantidade,
+            self.descricao,
+            self.fk_categoria
         )
 
         self.conn = conn.Connection()
@@ -77,3 +79,42 @@ class ProdutoModel:
     @fk_categoria.setter
     def fk_categoria(self, value):
         self._fk_categoria = str(value).strip()
+
+    # Functions
+
+    def not_empty(self):
+        cond = [
+            self.codigo_barra != '',
+            self.nome != '',
+            self.preco != '',
+            self.quantidade != '',
+            self.fk_categoria != ''
+        ]
+
+        if all(cond):
+            return True
+        else:
+            return False
+
+    def insert_produto(self):
+        if self.not_empty():
+            try:
+                self.conn.connect_db()
+
+                self.conn.cursor.execute("""
+                    INSERT INTO produtos (codigo_barra_prod, nome_prod,
+                        preco_prod, quantidade_prod, descricao_prod,
+                        fk_categoria)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                """, self.dados)
+
+                self.conn.close_db()
+                print('produto inserido com sucesso')
+
+                return True
+            except:
+                print('erro ao inserir produto')
+                return False
+        else:
+            print('preencha os campos obrigatorios')
+            return False
