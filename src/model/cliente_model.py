@@ -127,3 +127,24 @@ class ClienteModel:
         else:
             print('passe o codigo do cliente para alterar')
             return False
+
+    def delete_cliente(self):
+        if self.codigo != '':
+            try:
+                self.conn.connect_db()
+
+                self.conn.cursor.execute("""
+                    DELETE FROM clientes WHERE pk_id_cliente=?
+                """, (self.codigo,))
+                print('cliente apagado com sucesso')
+
+                self.conn.close_db()
+
+                return True
+            except:
+                print('erro ao deletar cliente')
+                return False
+        else:
+            print('passe o codigo do cliente para deletar')
+            return False
+
