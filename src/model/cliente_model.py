@@ -148,3 +148,24 @@ class ClienteModel:
             print('passe o codigo do cliente para deletar')
             return False
 
+    def select_cliente(self):
+        if self.cpf != '':
+            try:
+                self.conn.connect_db()
+
+                dados = self.conn.cursor.execute("""
+                    SELECT pk_id_cliente, cpf_clie, nome_clie, telefone_clie,
+                        endereco_clie, observacao_clie
+                    FROM clientes
+                    WHERE cpf_clie=?
+                """, (self.cpf,)).fetchone()
+
+                self.conn.close_db()
+
+                return dados
+            except:
+                print('erro ao buscar cliente')
+                return None
+        else:
+            print('passe o cpf do cliente para pesquisar')
+            return None
