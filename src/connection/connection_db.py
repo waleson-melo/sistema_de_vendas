@@ -59,7 +59,7 @@ class Connection:
                 "nome_clie"	TEXT NOT NULL,
                 "telefone_clie"	TEXT,
                 "endereco_clie"	TEXT,
-                "observacao"	TEXT
+                "observacao_clie"	TEXT
             );
         """)
 

@@ -1,9 +1,8 @@
-import src.model.usuario_model as useM
+import src.model.cliente_model as teste
 
 
 if __name__ == "__main__":
-   usem = useM.UsuarioModel(codigo=2)
+   t = teste.ClienteModel(cpf='045', nome='cli', telefone='92')
 
-   # usem.insert_usuario()
-   # usem.update_usuario()
-   # usem.delete_usuario()
+   # t.insert_cliente()
+
