@@ -99,3 +99,31 @@ class ClienteModel:
         else:
             print('preencha os campos obrigatorios')
             return False
+
+    def update_cliente(self):
+        if self.codigo != '':
+            if self.not_empty():
+                try:
+                    self.conn.connect_db()
+
+                    self.conn.cursor.execute("""
+                        UPDATE clientes
+                        SET cpf_clie=?, nome_clie=?, telefone_clie=?,
+                        endereco_clie=?, observacao_clie=?
+                        WHERE pk_id_cliente=?
+                    """, (self.cpf, self.nome, self.telefone, self.endereco,
+                          self.observacao, self.codigo))
+
+                    self.conn.close_db()
+                    print('cliente alterado com sucesso')
+
+                    return True
+                except:
+                    print('erro ao atualizar usuario')
+                    return False
+            else:
+                print('preencha os campos obrigatorios')
+                return False
+        else:
+            print('passe o codigo do cliente para alterar')
+            return False
