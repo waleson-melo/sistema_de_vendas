@@ -157,3 +157,25 @@ class UsuarioModel:
         else:
             print('passe o codigo do usuario para deletar')
             return False
+
+    def select_usuario(self):
+        if self.cpf != "":
+            try:
+                self.conn.connect_db()
+
+                dados = self.conn.cursor.execute("""
+                    SELECT pk_id_usuario, cpf_usua, nome_usua, telefone_usua,
+                        senha_usua, endereco_usua, observacao_usua 
+                    FROM usuarios
+                    WHERE cpf_usua=?
+                """, (self.cpf,)).fetchone()
+
+                self.conn.close_db()
+
+                return dados
+            except:
+                print('erro ao buscar usuario')
+                return None
+        else:
+            print('passe o cpf do usuario para pesquisar')
+            return None
