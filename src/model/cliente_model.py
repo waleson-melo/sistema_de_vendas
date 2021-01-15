@@ -64,3 +64,38 @@ class ClienteModel:
     @observacao.setter
     def observacao(self, value):
         self._observacao = str(value).strip().upper()
+
+    # Functions
+
+    def not_empty(self):
+        cond = [
+            self.cpf != '',
+            self.nome != ''
+        ]
+
+        if all(cond):
+            return True
+        else:
+            return False
+
+    def insert_cliente(self):
+        if self.not_empty():
+            try:
+                self.conn.connect_db()
+
+                self.conn.cursor.execute("""
+                    INSERT INTO clientes (cpf_clie, nome_clie, telefone_clie,
+                    endereco_clie, observacao_clie)
+                    VALUES (?, ?, ?, ?, ?)
+                """, self.dados)
+
+                self.conn.close_db()
+                print('cliente inserido com sucesso')
+
+                return True
+            except:
+                print('erro ao inserir cliente')
+                return False
+        else:
+            print('preencha os campos obrigatorios')
+            return False
