@@ -179,3 +179,20 @@ class UsuarioModel:
         else:
             print('passe o cpf do usuario para pesquisar')
             return None
+
+    def select_all_usuario(self):
+        try:
+            self.conn.connect_db()
+
+            dados = self.conn.cursor.execute("""
+                SELECT pk_id_usuario, cpf_usua, nome_usua, telefone_usua,
+                senha_usua, endereco_usua, observacao_usua 
+                FROM usuarios
+            """).fetchall()
+
+            self.conn.close_db()
+
+            return dados
+        except:
+            print('erro ao pesquisar usuarios')
+            return None
